@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="@color/white"
+    android:onClick="openHistory"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imgDice3"
+        android:layout_width="73dp"
+        android:layout_height="83dp"
+        android:rotation="-58"
+        android:src="@drawable/dice0"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRollNextDice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.624"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.741" />
+
+
+    <ImageView
+        android:id="@+id/imgDice2"
+        android:layout_width="73dp"
+        android:layout_height="83dp"
+        android:rotation="8"
+        android:src="@drawable/dice0"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRollNextDice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.748"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.365" />
+
+    <ImageView
+        android:id="@+id/imgDice4"
+        android:layout_width="73dp"
+        android:layout_height="83dp"
+        android:rotation="-79"
+        android:src="@drawable/dice0"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRollNextDice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.277" />
+
+    <ImageView
+        android:id="@+id/imgDice1"
+        android:layout_width="73dp"
+        android:layout_height="83dp"
+        android:rotation="-8"
+        android:src="@drawable/dice0"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRollNextDice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.207"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.634" />
+
+    <Button
+        android:id="@+id/btnRollNextDice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="420dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:onClick="rollNextDice"
+        android:text="@string/roll_next"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnRollAllNextDice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:onClick="rollAllDice"
+        android:text="@string/roll_all"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRollNextDice" />
+
+    <Button
+        android:id="@+id/btnDecrement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:onClick="onDecrementCounter"
+        android:text="-"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRollAllNextDice" />
+
+    <Button
+        android:id="@+id/btnIncrement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="70dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:onClick="onIncrementCounter"
+        android:text="+"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRollAllNextDice" />
+
+    <TextView
+        android:id="@+id/tvRollCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="-"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btnIncrement"
+        app:layout_constraintStart_toEndOf="@+id/btnDecrement"
+        app:layout_constraintTop_toBottomOf="@+id/btnRollAllNextDice" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:onClick="openHistory"
+        android:text="@string/history"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRollCounter" />
+</androidx.constraintlayout.widget.ConstraintLayout>

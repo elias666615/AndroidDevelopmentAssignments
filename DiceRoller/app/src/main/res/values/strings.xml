@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DiceRoller</string>
+    <string name="roll_next">Roll Next Dice</string>
+    <string name="roll_all">Roll All Dice</string>
+    <string name="history">History</string>
+    <string name="delete_all">Delete All</string>
+</resources>
