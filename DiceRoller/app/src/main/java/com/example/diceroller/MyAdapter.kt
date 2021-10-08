@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class MyAdapter(private val historyList: ArrayList<History_Item>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-    private var urlList = listOf<Int>(R.drawable.dice1, R.drawable.dice2, R.drawable.dice3, R.drawable.dice4, R.drawable.dice5, R.drawable.dice6)
+    private var urlList = listOf<Int>(R.drawable.dice0, R.drawable.dice1, R.drawable.dice2, R.drawable.dice3, R.drawable.dice4, R.drawable.dice5, R.drawable.dice6)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.history_item, parent, false)
         return MyViewHolder(itemView)
@@ -21,7 +21,7 @@ class MyAdapter(private val historyList: ArrayList<History_Item>): RecyclerView.
         var n = 0
         while(n < currentItem.numList.size) {
             holder.imageList[n].visibility = View.VISIBLE
-            holder.imageList[n].setImageResource(this.urlList[currentItem.numList[n]-1])
+            holder.imageList[n].setImageResource(this.urlList[currentItem.numList[n]])
             n++
         }
     }
