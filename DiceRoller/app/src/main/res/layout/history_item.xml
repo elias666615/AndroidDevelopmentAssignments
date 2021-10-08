@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvRollType"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dice1" />
+        app:srcCompat="@drawable/dice0" />
 
     <ImageView
         android:id="@+id/imageDice2"
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageDice1"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dice1" />
+        app:srcCompat="@drawable/dice0" />
 
     <ImageView
         android:id="@+id/imageDice3"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageDice2"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dice1" />
+        app:srcCompat="@drawable/dice0" />
 
     <ImageView
         android:id="@+id/imageDice4"
@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageDice3"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dice1" />
+        app:srcCompat="@drawable/dice0" />
 
     <TextView
         android:id="@+id/tvRollCounter"
