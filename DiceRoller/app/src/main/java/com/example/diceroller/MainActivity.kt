@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onIncrementCounter(btnIncrement: View) {
         this.numbers.clear()
+        diceRolled = 0
         val btnDecrement = findViewById<Button>(R.id.btnDecrement)
         val tvCounter = findViewById<TextView>(R.id.tvRollCounter)
         this.rollcounter++
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onDecrementCounter(btnDecrement: View) {
         this.numbers.clear()
+        diceRolled = 0
         this.ImageList[rollcounter-1].visibility = View.INVISIBLE
         this.ImageList[rollcounter-1].setImageResource(urlList[0])
         val btnIncrement = findViewById<Button>(R.id.btnIncrement)
@@ -81,6 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     fun rollAllDice(btnRollAllDice: View) {
         this.numbers.clear()
+        diceRolled = 0
         var numbers = mutableListOf<Int>()
         var counter = 0
         for(image in ImageList) {
@@ -112,11 +116,9 @@ class MainActivity : AppCompatActivity() {
         }
         println(postData)
         val JsonObjectRequest = JsonObjectRequest(Request.Method.POST, Posturl, postData,
-            Response.Listener { response -> println(response) },
-            Response.ErrorListener { println("************ FAILED ************") })
+            Response.Listener { response -> addResult(numbers, "Roll All") },
+            Response.ErrorListener { Toast.makeText(applicationContext, "couldn't save result :/", Toast.LENGTH_SHORT).show() })
         queue.add(JsonObjectRequest)
-        if(Singleton.initiated) Singleton.list.add(History_Item(numbers, "Roll All Dice", this.rollcounter))
-        this.diceRolled = 0
     }
 
     fun rollNextDice(btnRollNextDice: View) {
@@ -149,14 +151,31 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         val JsonObjectRequest = JsonObjectRequest(Request.Method.POST, Posturl, postData,
-            Response.Listener { response -> println(response) },
-            Response.ErrorListener { println("************ FAILED ************") })
+            Response.Listener { response -> addResult(numbers, "Roll Next") },
+            Response.ErrorListener { Toast.makeText(applicationContext, "couldn't save result :/", Toast.LENGTH_SHORT).show() })
         queue.add(JsonObjectRequest)
-        if(Singleton.initiated) Singleton.list.add(History_Item(numbers, "Roll Next Dice", this.rollcounter))
     }
 
     fun openHistory(btnHistory: View) {
         val intent = Intent(this, History::class.java)
         startActivity(intent)
+    }
+
+    private fun addResult(numbers: List<Int>, roll_type: String) {
+        println("********* ATTENTION **********")
+        if(Singleton.initiated) {
+            println(numbers)
+            var nums = mutableListOf<Int>()
+            if(diceRolled >= 1 || roll_type == "Roll All" && rollcounter >= 1) nums.add(numbers[0])
+            else nums.add(0)
+            if(diceRolled >= 2 || roll_type == "Roll All" && rollcounter >= 2) nums.add(numbers[1])
+            else nums.add(0)
+            if(diceRolled >= 3 || roll_type == "Roll All" && rollcounter >= 3) nums.add(numbers[2])
+            else nums.add(0)
+            if(diceRolled >= 4 || roll_type == "Roll All" && rollcounter >= 4) nums.add(numbers[3])
+            else nums.add(0)
+            Singleton.list.add(History_Item(nums, roll_type, rollcounter))
+            println(nums)
+        }
     }
 }
