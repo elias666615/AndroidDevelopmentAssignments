@@ -3,4 +3,7 @@
     <string name="cam_gallery">Camera and Gallery</string>
     <string name="gps_map">GPS and Map</string>
     <string name="main_title">Camera, Gallery, GPS, and Map</string>
+    <string name="take_picture">Take a picture</string>
+    <string name="upload_gallery">Upload from Gallery</string>
+    <string name="take_or_upload_image">Take a Picture or Upload an Image</string>
 </resources>
