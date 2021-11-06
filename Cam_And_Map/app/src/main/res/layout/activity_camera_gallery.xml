@@ -19,7 +19,8 @@
         app:backgroundTint="#05445E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"/>
 
     <Button
         android:id="@+id/Btn_TakePicture"
