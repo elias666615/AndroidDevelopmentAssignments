@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     // navigates to the GPS and map activity
     fun GPS_Map(View: View) {
-        val intent = Intent(this, GPS_Map::class.java)
+        val intent = Intent(this, map::class.java)
         startActivity(intent)
     }
 }
