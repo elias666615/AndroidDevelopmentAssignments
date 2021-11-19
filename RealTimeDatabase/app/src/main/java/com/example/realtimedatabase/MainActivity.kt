@@ -1,6 +1,7 @@
 package com.example.realtimedatabase
 
 import android.content.ContentValues.TAG
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.random.Random
@@ -23,19 +25,27 @@ import kotlin.random.Random
 
 object RecordService {
     var records = ArrayList<DiceRecord>()
-    var record_ids = ArrayList<String>()
-    fun populateList(Records: HashMap<String, HashMap<String, HashMap<String, String>>>, adapter: RecordAdapter) {
-        for ((key, value) in Records.get("records")?.entries!!) {
-            if (!record_ids.contains(key)) {
-                records.add(DiceRecord(value.get("username"),
-                    value.get("dice1").toString(),
-                    value.get("dice2").toString(),
-                    value.get("dice3").toString(),
-                    value.get("dice4").toString()))
-                record_ids.add(key)
-                adapter.notifyDataSetChanged()
-            }
-        }
+//    var first_time: Boolean = true
+//    fun populateList(Records: HashMap<String, HashMap<String, String>>, adapter: RecordAdapter) {
+//        for ((key, value) in Records.entries!!) {
+//            records.add(DiceRecord(value.get("username"),
+//                    value.get("dice1").toString(),
+//                    value.get("dice2").toString(),
+//                    value.get("dice3").toString(),
+//                    value.get("dice4").toString()))
+//            adapter.notifyDataSetChanged()
+//        }
+//        first_time = false
+//    }
+
+    fun addItem(Record: HashMap<String, String>, adapter: RecordAdapter) {
+        records.add(DiceRecord(Record.get("username"),
+            Record.get("dice1").toString(),
+            Record.get("dice2").toString(),
+            Record.get("dice3").toString(),
+            Record.get("dice4").toString(),
+            Record.get("timestamp")))
+        adapter.notifyDataSetChanged()
     }
 }
 
@@ -57,28 +67,49 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Write a message to the database
-        database = Firebase.database.reference
+        database = Firebase.database.getReference("records")
 
-        // Read from the database
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                val value = dataSnapshot.value
-                if(value != null) {
-                    val records = value as HashMap<String, HashMap<String, HashMap<String, String>>>
-                    RecordService.populateList(records, adapter)
-                }
+        database.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                RecordService.addItem(snapshot.value as HashMap<String, String>, adapter)
+            }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                return
+            }
 
-                //Log.d(TAG, "Value is: $value")
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                return
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                return
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException())
+                return
             }
         })
+        // Read from the database
+//        database.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                val value = dataSnapshot.value
+//                if(value != null) {
+//                    val records = value as HashMap<String, HashMap<String, String>>
+//                    RecordService.populateList(records, adapter)
+//                }
+//
+//
+//                //Log.d(TAG, "Value is: $value")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException())
+//            }
+//        })
         dice1 = findViewById(R.id.tv_dice1)
         dice2 = findViewById(R.id.tv_dice2)
         dice3 = findViewById(R.id.tv_dice3)
@@ -107,7 +138,16 @@ class MainActivity : AppCompatActivity() {
             dice3.setText(_dice3.toString())
             dice4.setText(_dice4.toString())
 
-            addRecord(et_username.text.toString(), _dice1.toString(), _dice2.toString(), _dice3.toString(), _dice4.toString())
+            val date_time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                DateTimeFormatter
+                    .ofPattern("yyyy-MM-dd HH:mm:ss")
+                    .withZone(ZoneOffset.UTC)
+                    .format(Instant.now())
+            } else {
+                "N/A"
+            }
+
+            addRecord(et_username.text.toString(), _dice1.toString(), _dice2.toString(), _dice3.toString(), _dice4.toString(), date_time)
         }
     }
 
@@ -123,8 +163,8 @@ class MainActivity : AppCompatActivity() {
         return id
     }
 
-    private fun addRecord(username: String, dice1: String, dice2: String, dice3: String, dice4: String) {
-        val record = DiceRecord(username, dice1, dice2, dice3, dice4)
-        database.child("records").child(generateRandomId()).setValue(record)
+    private fun addRecord(username: String, dice1: String, dice2: String, dice3: String, dice4: String, date_time: String) {
+        val record = DiceRecord(username, dice1, dice2, dice3, dice4, date_time)
+        database.child(generateRandomId()).setValue(record)
     }
 }
