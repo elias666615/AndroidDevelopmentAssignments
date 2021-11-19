@@ -23,6 +23,7 @@ class RecordAdapter(private val dataSet: ArrayList<DiceRecord>): RecyclerView.Ad
         val record = dataSet[position]
         viewHolder.username.setText(record.username)
         viewHolder.dice_numbers.setText(record.dice1.toString() + " - " + record.dice2.toString() + " - " + record.dice3.toString() + " - " + record.dice4.toString())
+        viewHolder.timestamp.setText(record.timestamp)
     }
 
     override fun getItemCount() = dataSet.size
