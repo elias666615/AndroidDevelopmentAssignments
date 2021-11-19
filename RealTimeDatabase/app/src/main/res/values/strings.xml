@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Dice Game</string>
+    <string name="username_input">Enter Username</string>
+    <string name="roll">Roll Dice</string>
+    <string name="empty_dice">-</string>
+    <string name="records">Records</string>
+</resources>
